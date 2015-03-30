@@ -46,7 +46,6 @@ Tech Stack
 * [RSpec](https://www.relishapp.com/rspec/rspec-core/v/2-99/docs/)
 * [Thin](http://code.macournoyer.com/thin/)
 * [Foundation](http://foundation.zurb.com/)
-* [Haml](http://haml.info/)
 * [Sass](http://sass-lang.com/)
 * [CoffeeScript](http://coffeescript.org/)
 * [Assetpack](https://github.com/rstacruz/sinatra-assetpack)
