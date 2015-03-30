@@ -3,7 +3,6 @@ source "http://rubygems.org"
 gem 'mandrill-api'
 gem 'thin'
 gem 'sinatra'
-gem 'haml'
 gem 'json'
 gem 'coffee-script'
 gem 'rake'
