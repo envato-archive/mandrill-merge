@@ -2,8 +2,10 @@ require 'sinatra/base'
 require 'sinatra/assetpack'
 require 'json'
 require 'sinatra/reloader' if development?
-require 'haml'
 require 'redcarpet'
+
+root = File.expand_path(File.dirname(__FILE__))
+Dir[File.join(root, "/lib/**/*.rb")].each { |path| require path }
 
 class App < Sinatra::Application
   set :root, File.dirname(__FILE__)

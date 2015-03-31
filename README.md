@@ -40,7 +40,7 @@ rake spec
 Tech Stack
 -------
 
-* [Mandrill API] (https://mandrillapp.com/api/docs/)
+* [Dave Worth's Mailchimp gem] (https://github.com/daveworth/mailchimp-gem) which wraps [HttParty](https://github.com/jnunemaker/httparty) and the [Mandrill API] (https://mandrillapp.com/api/docs/)
 * [Ruby](http://www.ruby-doc.org/core-2.1.2/)
 * [Sinatra](http://www.sinatrarb.com/)
 * [RSpec](https://www.relishapp.com/rspec/rspec-core/v/2-99/docs/)
