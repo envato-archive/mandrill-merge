@@ -2,7 +2,6 @@ require 'sinatra/base'
 require 'sinatra/assetpack'
 require 'json'
 require 'sinatra/reloader' if development?
-require 'haml'
 require 'redcarpet'
 
 root = File.expand_path(File.dirname(__FILE__))
