@@ -20,6 +20,11 @@ Install gems
 bundle install
 ```
 
+Create an environment file for development
+```
+echo '#' > .env
+```
+
 Run
 ---
 
