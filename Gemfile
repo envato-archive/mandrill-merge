@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
-gem 'mandrill-api'
+gem 'mailchimp'
+gem 'dotenv'
 gem 'thin'
 gem 'sinatra'
 gem 'haml'
