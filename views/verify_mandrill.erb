@@ -1,0 +1,5 @@
+<% if @mandrill_details[:can_connect?] %>
+Connection successful: user is <%= @mandrill_details[:username] %>
+<% else %>
+Connection unsuccessful
+<% end %>
