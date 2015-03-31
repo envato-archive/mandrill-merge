@@ -8,6 +8,9 @@ root = File.expand_path(File.dirname(__FILE__))
 Dir[File.join(root, "/lib/**/*.rb")].each { |path| require path }
 
 class App < Sinatra::Application
+ 
+  enable :sessions
+
   set :root, File.dirname(__FILE__)
   register Sinatra::AssetPack
 
@@ -38,6 +41,21 @@ class App < Sinatra::Application
   }
 
   get '/' do
+    erb :go
+  end
+
+  post '/submit-api' do
+    session[:key] = params[:key]
+    redirect '/verify-mandrill'
+  end
+
+  get '/verify-mandrill' do
+    mandrill = Mandrill.new(session[:key])
+    @mandrill_details = {:can_connect? => mandrill.can_connect?, :username => mandrill.username}
+    erb :verify_mandrill
+  end
+
+  get '/docs' do
     erb :index
   end
 
