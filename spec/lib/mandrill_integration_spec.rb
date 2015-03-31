@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'mandrill'
 
 describe 'Mandrill' do
   it 'should connect using the API key from the environment by default' do
