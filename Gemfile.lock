@@ -11,8 +11,6 @@ GEM
     eventmachine (1.0.3)
     excon (0.45.1)
     execjs (2.1.0)
-    haml (4.0.5)
-      tilt
     jsmin (1.0.1)
     json (1.8.1)
     mandrill-api (1.0.53)
@@ -62,7 +60,6 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-script
-  haml
   json
   mandrill-api
   rack-test
