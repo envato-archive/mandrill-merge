@@ -39,7 +39,7 @@ class App < Sinatra::Application
   }
 
   get '/' do
-    haml :index
+    erb :index
   end
 
 end
