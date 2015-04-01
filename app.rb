@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/assetpack'
+require 'sinatra/partial'
 require 'json'
 require 'sinatra/reloader' if development?
 require 'redcarpet'
@@ -9,6 +10,10 @@ Dir[File.join(root, "/lib/**/*.rb")].each { |path| require path }
 
 class App < Sinatra::Application
  
+  register Sinatra::Partial
+  enable :partial_underscores
+  set :partial_template_engine, :erb
+  
   enable :sessions
 
   set :root, File.dirname(__FILE__)
@@ -26,7 +31,8 @@ class App < Sinatra::Application
     js :application, '/js/app.js', [
         '/js/vendor/jquery.js',
         '/js/vendor/**/*.js',
-        '/js/foundation/foundation.min.js',
+        '/js/foundation/foundation.js',
+        '/js/foundation/foundation.accordion.js',
         '/js/*.js'
     ]
 
@@ -41,7 +47,11 @@ class App < Sinatra::Application
   }
 
   get '/' do
-    erb :go
+    redirect '/mail-merge'
+  end
+
+  get '/mail-merge' do
+    erb :mail_merge
   end
 
   post '/submit-api' do
@@ -51,8 +61,8 @@ class App < Sinatra::Application
 
   get '/verify-mandrill' do
     mandrill = Mandrill.new(session[:key])
-    @mandrill_details = {:can_connect? => mandrill.can_connect?, :username => mandrill.username}
-    erb :verify_mandrill
+    @mandrill_details = {:can_connect => mandrill.can_connect?, :username => mandrill.username}
+    erb :mail_merge
   end
 
   get '/docs' do

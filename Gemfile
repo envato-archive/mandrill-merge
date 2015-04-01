@@ -9,6 +9,7 @@ gem 'coffee-script'
 gem 'rake'
 gem 'redcarpet'
 gem 'sinatra-assetpack', :require => 'sinatra/assetpack'
+gem 'sinatra-partial'
 gem 'sass'
 
 group :development, :test  do

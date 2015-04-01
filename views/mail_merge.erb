@@ -1,0 +1,20 @@
+<ul class="accordion" data-accordion>
+  <li class="accordion-navigation">
+    <%= partial(:connect_mandrill_header, :locals => @mandrill_details) %>
+    <div id="panel1a" class="content active">
+      <%= partial(:connect_mandrill_body) %>
+    </div>
+  </li>
+  <li class="accordion-navigation">
+    <%= partial(:select_template_header) %>
+    <div id="panel2a" class="content">
+      <%= partial(:select_template_body) %>
+    </div>
+  </li>
+  <li class="accordion-navigation">
+    <%= partial(:connect_db_header) %>
+    <div id="panel3a" class="content active">
+      <%= partial(:connect_db_body) %>
+    </div>
+  </li>
+</ul>
