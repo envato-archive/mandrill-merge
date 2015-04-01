@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     backports (3.6.4)
+    bond (0.5.1)
     coffee-script (2.3.0)
       coffee-script-source
       execjs
@@ -27,6 +28,14 @@ GEM
       rack (>= 1.0)
     rake (10.4.2)
     redcarpet (3.2.2)
+    ripl (0.7.1)
+      bond (~> 0.5.1)
+    ripl-multi_line (0.3.1)
+      ripl (>= 0.3.6)
+    ripl-rack (0.2.1)
+      rack (>= 1.0)
+      rack-test (~> 0.6.2)
+      ripl (>= 0.7.0)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
@@ -59,6 +68,11 @@ GEM
       eventmachine (~> 1.0)
       rack (~> 1.0)
     tilt (1.4.1)
+    tux (0.3.0)
+      ripl (>= 0.3.5)
+      ripl-multi_line (>= 0.2.4)
+      ripl-rack (>= 0.2.0)
+      sinatra (>= 1.2.1)
 
 PLATFORMS
   ruby
@@ -78,3 +92,4 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-partial
   thin
+  tux
