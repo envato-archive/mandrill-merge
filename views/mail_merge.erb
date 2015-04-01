@@ -1,3 +1,5 @@
+<h1>Mandrill Merge</h1>
+<h2 class="tagline">Making Mailouts Marvellous</h2>
 <ul class="accordion" data-accordion>
   <li class="accordion-navigation">
     <%= partial(:connect_mandrill_header, :locals => @mandrill_details) %>
@@ -15,6 +17,36 @@
     <%= partial(:connect_db_header) %>
     <div id="panel3a" class="content active">
       <%= partial(:connect_db_body) %>
+    </div>
+  </li>
+  <li class="accordion-navigation">
+    <%= partial(:select_data_header) %>
+    <div id="panel4a" class="content">
+      <%= partial(:select_data_body) %>
+    </div>
+  </li>
+  <li class="accordion-navigation">
+    <%= partial(:sub_query_header) %>
+    <div id="panel5a" class="content">
+      <%= partial(:sub_query_body) %>
+    </div>
+  </li>
+  <li class="accordion-navigation">
+    <%= partial(:preview_header) %>
+    <div id="panel6a" class="content">
+      <%= partial(:preview_body) %>
+    </div>
+  </li>
+  <li class="accordion-navigation">
+    <%= partial(:send_test_header) %>
+    <div id="panel7a" class="content">
+      <%= partial(:send_test_body) %>
+    </div>
+  </li>
+  <li class="accordion-navigation">
+    <%= partial(:go_header) %>
+    <div id="panel8a" class="content">
+      <%= partial(:go_body) %>
     </div>
   </li>
 </ul>
