@@ -54,4 +54,5 @@ Tech Stack
 * [Sass](http://sass-lang.com/)
 * [CoffeeScript](http://coffeescript.org/)
 * [Assetpack](https://github.com/rstacruz/sinatra-assetpack)
+* [DataObjects - mysql](https://github.com/datamapper/do)
 
