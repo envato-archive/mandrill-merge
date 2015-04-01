@@ -1,5 +1,11 @@
 source "http://rubygems.org"
 
+# the dataobjects (from datamapper) drivers:
+gem 'do_mysql'
+#gem 'do_postgres'
+#gem 'do_sqlite3'
+
+
 gem 'mailchimp'
 gem 'dotenv'
 gem 'thin'
