@@ -1,4 +1,16 @@
+$mandrill-purple: #532F78;
+$warning: #E8AB48;
+
 h1 {
-  color: midnightblue;
-  font-size: 2.5em;
+  color: $mandrill-purple;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  font-weight: bold;
+}
+
+h2.tagline {
+  color: $mandrill-purple;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  font-style: italic;
 }
