@@ -10,6 +10,19 @@ class App < Sinatra::Application
     erb :mail_merge
   end
 
+  post '/db/create' do
+    logger.info "-"*80
+    logger.info "DB connection with #{ params.dup.tap{|p| p['password'] = 'REDACTED'} }"
+    session[:db] ||= {}
+    session[:db][:username] = params['username']
+    session[:db][:password] = params['password']
+    session[:db][:database] = params['database']
+    session[:db][:host] = params['host']
+    session[:db][:port] = params['port']
+
+    redirect 'mail-merge'
+  end
+
   post '/verify-mandrill' do
     session[:key] = params[:key]
     mandrill = Mandrill.new(session[:key])
