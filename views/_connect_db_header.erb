@@ -1,8 +1,5 @@
 <a href="#connect_db" id="connect_db_header">
   Connect to your database
-  <% if Database.connection %>
-    Connection successful: <%= Database.connection.to_s %>
-  <% else %>
-    Connection unsuccessful
-  <% end %>
+
+  <span class="db-connection-status"></span>
 </a>

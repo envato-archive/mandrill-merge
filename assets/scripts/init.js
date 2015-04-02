@@ -19,3 +19,12 @@ jQuery(function() {
     e.preventDefault();
   });
 });
+
+function db_connect_response(response) {
+  $('.db-connection-status').html(response.message);
+
+  if (response.can_connect) {
+    toggle_tab('select_data');
+  }
+}
+
