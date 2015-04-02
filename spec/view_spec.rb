@@ -10,12 +10,10 @@ describe 'views' do
 
   describe 'Mandrill connection' do
     let(:happy_mandrill) { double(:can_connect? => true, :username => 'Tilly') } 
-    let(:sad_mandrill) { double(:can_connect? => false, :username => nil) } 
+    let(:sad_mandrill)   { double(:can_connect? => false, :username => nil) }
 
     subject(:response) do
-      post "/submit-api", {'key' => 'test'}
-      follow_redirect!
-      last_response
+      post "/verify-mandrill", {'key' => 'test'}
     end
 
     context 'can connect using the provided api key' do

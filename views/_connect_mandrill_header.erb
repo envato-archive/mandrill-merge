@@ -1,10 +1,5 @@
-<a href="#panel1a">
+<a href="#connect_mandrill" id="connect_mandrill_header">
   Connect to Mandrill
-  <% if @mandrill_details %>
-    <% if @mandrill_details[:can_connect] %>
-    Connection successful: user is <%= @mandrill_details[:username] %>
-    <% else %>
-    Connection unsuccessful
-    <% end %>
-  <% end %>
+
+  <span class="mandrill-connection-status"></span>
 </a>

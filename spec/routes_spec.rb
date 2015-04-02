@@ -2,12 +2,11 @@ require 'spec_helper'
 
 describe 'routes' do
   
-  describe '#submit-api' do
-    it 'should redirect to verify connection' do
-      post "/submit-api", {:key => 'test'}
-      last_response.should be_redirect
-      follow_redirect!
-      last_request.url.should match /verify-mandrill$/
+  describe '#verify-mandrill' do
+    it 'returns json with expected keys' do
+      post '/verify-mandrill', {:key => 'test'}
+      json_hash = JSON.parse(last_response.body)
+      expect(json_hash.keys).to include('can_connect', 'message')
     end
   end
 

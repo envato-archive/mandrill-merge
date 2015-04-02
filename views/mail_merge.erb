@@ -5,49 +5,49 @@
 <ul class="accordion" data-accordion>
   <li class="accordion-navigation">
     <%= partial(:connect_mandrill_header, :locals => @mandrill_details) %>
-    <div id="panel1a" class="content active">
+    <div id="connect_mandrill" class="content active">
       <%= partial(:connect_mandrill_body) %>
     </div>
   </li>
   <li class="accordion-navigation">
     <%= partial(:select_template_header) %>
-    <div id="panel2a" class="content">
+    <div id="select_template" class="content">
       <%= partial(:select_template_body) %>
     </div>
   </li>
   <li class="accordion-navigation">
     <%= partial(:connect_db_header) %>
-    <div id="panel3a" class="content active">
+    <div id="connect_db" class="content">
       <%= partial(:connect_db_body) %>
     </div>
   </li>
   <li class="accordion-navigation">
     <%= partial(:select_data_header) %>
-    <div id="panel4a" class="content">
+    <div id="select_data" class="content">
       <%= partial(:select_data_body) %>
     </div>
   </li>
   <li class="accordion-navigation">
     <%= partial(:sub_query_header) %>
-    <div id="panel5a" class="content">
+    <div id="sub_query" class="content">
       <%= partial(:sub_query_body) %>
     </div>
   </li>
   <li class="accordion-navigation">
     <%= partial(:preview_header) %>
-    <div id="panel6a" class="content">
+    <div id="preview" class="content">
       <%= partial(:preview_body) %>
     </div>
   </li>
   <li class="accordion-navigation">
     <%= partial(:send_test_header) %>
-    <div id="panel7a" class="content">
+    <div id="send_test" class="content">
       <%= partial(:send_test_body) %>
     </div>
   </li>
   <li class="accordion-navigation">
     <%= partial(:go_header) %>
-    <div id="panel8a" class="content">
+    <div id="go" class="content">
       <%= partial(:go_body) %>
     </div>
   </li>
