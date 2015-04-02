@@ -8,15 +8,17 @@ class App < Sinatra::Application
     erb :mail_merge
   end
 
-  post '/submit-api' do
+  post '/verify-mandrill' do
     session[:key] = params[:key]
-    redirect '/verify-mandrill'
-  end
-
-  get '/verify-mandrill' do
     mandrill = Mandrill.new(session[:key])
-    @mandrill_details = {:can_connect => mandrill.can_connect?, :username => mandrill.username}
-    erb :mail_merge
+
+    if mandrill.can_connect?
+      message = "Connection successful: User is #{mandrill.username}"
+    else
+      message = 'Connection unsuccessful'
+    end
+
+    {:can_connect => mandrill.can_connect?, :message => message}.to_json
   end
 
   get '/docs' do
