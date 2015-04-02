@@ -5,7 +5,7 @@ module Database
   @config = nil
 
   def self.connection
-    $logger.info "connection #{@connection}"
+    #$logger.info "connection #{@connection}"
     @connection || begin
       @config = ConfigStore.default
       connect
@@ -18,7 +18,7 @@ module Database
   private
   def self.connect
     if @config
-      $logger.info "connecting with #{@config}"
+      #$logger.info "connecting with #{@config}"
       raise DriverNotSupported unless @config.driver == 'mysql' 
       @connection = DataObjects::Connection.new(connection_string)
     end
