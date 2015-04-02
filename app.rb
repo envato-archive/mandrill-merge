@@ -6,7 +6,8 @@ require 'sinatra/reloader' if development?
 require 'redcarpet'
 
 root = File.expand_path(File.dirname(__FILE__))
-Dir[File.join(root, "/lib/**/*.rb")].each { |path| require path }
+LIB_PATH_GLOB = File.join(root, "lib/**/*.rb")
+Dir[LIB_PATH_GLOB].each { |path| require path }
 
 class App < Sinatra::Application
  
@@ -14,6 +15,8 @@ class App < Sinatra::Application
   enable :partial_underscores
   set :partial_template_engine, :erb
   
+  also_reload LIB_PATH_GLOB
+
   enable :sessions
 
 end
