@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe App do
+describe 'routes' do
   
   describe '#submit-api' do
     it 'should redirect to verify connection' do
