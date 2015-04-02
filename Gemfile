@@ -1,9 +1,8 @@
 source "http://rubygems.org"
 
-# the dataobjects (from datamapper) drivers:
+# Dataobjects (from datamapper) driver. Add others for other RDBMS.
+# See http://github.com/datamapper/do
 gem 'do_mysql'
-#gem 'do_postgres'
-#gem 'do_sqlite3'
 
 
 gem 'mailchimp'
