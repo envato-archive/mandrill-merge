@@ -23,3 +23,4 @@ end
 
 require_relative 'assets'
 require_relative 'routes'
+require_relative 'helpers'
