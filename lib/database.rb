@@ -1,13 +1,33 @@
 require 'do_mysql'
 
-class Database
-  class << self
-    attr_accessor :connection
+module Database
+  @connection = nil
+  @config = nil
 
-    def connect(user:, pass:, host:, port:, database:)
-      pass = nil if pass == ""
-      @@connection = DataObjects::Connection.new("mysql://#{user}:#{pass}@#{host}:#{port}/#{database}")
+  def self.connection
+    $logger.info "connection #{@connection}"
+    @connection || begin
+      @config = ConfigStore.default
+      connect
+    rescue DataObjects::SQLError
+      #connection didn't work
+      raise ConnectionError
     end
   end
 
+  private
+  def self.connect
+    if @config
+      $logger.info "connecting with #{@config}"
+      raise DriverNotSupported unless @config.driver == 'mysql' 
+      @connection = DataObjects::Connection.new(connection_string)
+    end
+  end
+
+  def self.connection_string
+    "#{@config.driver}://#{@config.user}:#{@config.pass}@#{@config.host}:#{@config.port}/#{@config.database}"
+  end
+
+  class DriverNotSupported < StandardError; end
+  class ConnectionError < StandardError; end
 end

@@ -11,16 +11,12 @@ class App < Sinatra::Application
   end
 
   post '/db/create' do
-    logger.info "-"*80
     logger.info "DB connection with #{ params.dup.tap{|p| p['password'] = 'REDACTED'} }"
     session[:db] ||= {}
-    session[:db][:username] = params['username']
-    session[:db][:password] = params['password']
-    session[:db][:database] = params['database']
-    session[:db][:host] = params['host']
-    session[:db][:port] = params['port']
+    connection_details = Database::ConfigStore.save(params, session)
+    session[:db] = connection_details.to_hash
 
-    redirect 'mail-merge'
+    { :can_connect => db_connection.status, :message => db_connection.to_s }.to_json
   end
 
   post '/verify-mandrill' do
