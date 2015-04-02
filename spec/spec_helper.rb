@@ -13,3 +13,10 @@ end
 def app
   App
 end
+
+class NullLogger
+  def info(*args)
+    puts args
+  end
+end
+

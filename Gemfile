@@ -18,6 +18,7 @@ gem 'sinatra-partial'
 gem 'sass'
 
 group :development, :test  do
+  gem 'pry'
   gem 'rspec', '2.99'
   gem 'rack-test'
   gem 'sinatra-contrib'
