@@ -1,6 +1,8 @@
 module Database
   class ConfigStore
 
+    @@store = {}
+
     class << self
       def store=(_store={})
         @@store = _store
