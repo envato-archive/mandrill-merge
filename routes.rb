@@ -21,9 +21,12 @@ class App < Sinatra::Application
   end
 
   get '/db/test' do
+    connection = Database.connection
+    logger.info "DB/TEST: #{connection}"
+
     {
-      :can_connect => !Database.connection.nil?,
-      :message => "Connection info: #{Database.connection}"
+      :can_connect => !connection.nil?,
+      :message => "Connection info: #{connection}"
     }.to_json
   end
 
