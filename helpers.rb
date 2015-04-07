@@ -6,3 +6,7 @@ MADJECTIVES = ["Macabre", "Mad", "Magic", "Magnificent", "Majestic", "Marvellous
 def madjective
   MADJECTIVES.sample
 end
+
+def valid_email?(email)
+  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.match email
+end

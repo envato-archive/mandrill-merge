@@ -23,6 +23,10 @@ class MandrillMergeApp
     $('#mandrill-template-status').html response.message
     window.MandrillMerge.app.toggle_section 'connect_db'
 
+  test_sent: (response)->
+    $('#test-status').html response.message
+    window.MandrillMerge.app.toggle_section 'go'
+
   toggle_section: (name)->
     $('#' + name + '_header').click();  
 

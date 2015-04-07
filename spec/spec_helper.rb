@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../app'
 require 'rspec'
+require 'rspec/mocks'
 require 'rack/test'
+require 'pry'
 
 set :environment, :test
 

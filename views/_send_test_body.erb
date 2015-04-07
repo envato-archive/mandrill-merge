@@ -1,1 +1,4 @@
-<p>Under Construction</p>
+<form action="/send-test" method="post" ajax-form ajax-callback="test_sent">
+  <input type="text" name="email" placeholder="Send to email address">
+</form>
+<%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>

@@ -32,7 +32,7 @@ describe 'views' do
       before { expect(Mandrill).to receive(:new).with('test').and_return(sad_mandrill) }
       
       it "displays connection unsuccessful" do
-        expect(response.body).to include("Connection unsuccessful")
+        expect(response.body).to include("Cannot connect to Mandrill")
       end
     end
   end
