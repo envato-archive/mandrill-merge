@@ -1,3 +1,5 @@
+var MailMerge = MailMerge || {};
+
 $.ajaxSetup ({
    cache: false
 });

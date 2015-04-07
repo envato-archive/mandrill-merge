@@ -1,0 +1,8 @@
+<div class="clearfix">
+  <% if locals[:on_back] %>
+    <a role="button" href="#" class="button nav-button back left" onclick="MandrillMerge.app.<%= on_back  %>($(this))">Back</a>
+  <% end %>
+  <% if locals[:on_next] %>
+    <a role="button" href="#" class="button nav-button next right" onclick="MandrillMerge.app.<%= on_next %>($(this))">Next</a>
+  <% end %>
+</div>
