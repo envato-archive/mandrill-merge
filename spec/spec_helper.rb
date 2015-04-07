@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../app'
+require File.join(File.dirname(__FILE__), '..', 'app')
 require 'rspec'
 require 'rack/test'
 
@@ -13,3 +13,10 @@ end
 def app
   App
 end
+
+class NullLogger
+  def info(*args)
+    puts args
+  end
+end
+

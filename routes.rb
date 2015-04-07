@@ -10,6 +10,24 @@ class App < Sinatra::Application
     erb :mail_merge
   end
 
+  before do
+    Database::ConfigStore.store = session
+  end
+
+  post '/db/create' do
+    logger.info "DB connection with #{ params.dup.tap{|p| p['password'] = 'REDACTED'} }"
+    Database::ConfigStore.save(params)
+    redirect "/db/test"
+  end
+
+  get '/db/test' do
+    begin
+      { can_connect: true, message: "Connection info: #{Database.connection}" }
+    rescue StandardError => e
+      { can_connect: false, message: e.message }
+    end.to_json
+  end
+
   post '/verify-mandrill' do
     session[:key] = params[:key]
     mandrill = Mandrill.new(session[:key])
