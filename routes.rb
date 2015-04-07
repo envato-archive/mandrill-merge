@@ -21,13 +21,11 @@ class App < Sinatra::Application
   end
 
   get '/db/test' do
-    connection = Database.connection
-    logger.info "DB/TEST: #{connection}"
-
-    {
-      :can_connect => !connection.nil?,
-      :message => "Connection info: #{connection}"
-    }.to_json
+    begin
+      { can_connect: true, message: "Connection info: #{Database.connection}" }
+    rescue StandardError => e
+      { can_connect: false, message: e.message }
+    end.to_json
   end
 
   post '/verify-mandrill' do

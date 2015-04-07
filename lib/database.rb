@@ -8,9 +8,8 @@ module Database
     @connection || begin
       @config = ConfigStore.default
       connect
-    rescue DataObjects::SQLError
-      #connection didn't work
-      #raise ConnectionError
+    rescue DataObjects::SQLError => e
+      raise ConnectionError.new(e)
     end
   end
 
