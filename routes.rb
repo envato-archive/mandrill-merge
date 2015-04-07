@@ -10,6 +10,10 @@ class App < Sinatra::Application
     erb :mail_merge
   end
 
+  before do
+    Database::ConfigStore.new(session)
+  end
+
   post '/db/create' do
     logger.info "DB connection with #{ params.dup.tap{|p| p['password'] = 'REDACTED'} }"
     Database::ConfigStore.new(session).save(params)
