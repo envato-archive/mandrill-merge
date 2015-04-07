@@ -5,7 +5,7 @@ module Database
     end
 
     def empty?
-      values.any?(&:nil?)
+      values.all?(&:nil?)
     end
 
     def initialize(settings=nil)
