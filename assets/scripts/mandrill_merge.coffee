@@ -42,7 +42,9 @@ class MandrillMergeApp
       window.MandrillMerge.app.toggle_section 'select_data'
 
   set_db_query_response: (response)->
-    window.MandrillMerge.app.toggle_section 'sub_query'
+    $('#data-query-status').html response.message
+    if response.success
+      window.MandrillMerge.app.toggle_section 'sub_query'
 
   test_sent: (response)->
     $('#test-status').html response.message
