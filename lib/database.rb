@@ -23,7 +23,7 @@ module Database
   end
 
   def self.connection_string
-    "#{@config.driver}://#{@config.user}:#{@config.pass}@#{@config.host}:#{@config.port}/#{@config.database}"
+    "#{@config.driver}://#{@config.username}:#{@config.password}@#{@config.host}:#{@config.port}/#{@config.database}"
   end
 
   class DriverNotSupported < StandardError; end
