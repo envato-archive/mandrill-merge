@@ -8,8 +8,9 @@ module Database
       values.any?(&:nil?)
     end
 
-    def initialize(settings={})
+    def initialize(settings=nil)
       super()
+      settings ||= {}
       self.driver   = settings['driver']
       self.name     = settings['name']
       self.host     = settings['host']
