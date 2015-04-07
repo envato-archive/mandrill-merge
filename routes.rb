@@ -17,16 +17,13 @@ class App < Sinatra::Application
   post '/db/create' do
     logger.info "DB connection with #{ params.dup.tap{|p| p['password'] = 'REDACTED'} }"
     Database::ConfigStore.new(session).save(params)
-    redirect '/db/test/:name'
+    redirect "/db/test"
   end
 
-  get '/db/test/:name' do
-    logger name
-    halt name
+  get '/db/test' do
     {
-      :name => db_connection.name,
-      :can_connect => db_connection.status,
-      :message => db_connection.to_s
+      :can_connect => !Database.connection.nil?,
+      :message => "Connection info: #{Database.connection}"
     }.to_json
   end
 
