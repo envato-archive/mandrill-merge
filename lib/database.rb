@@ -1,23 +1,23 @@
 require 'do_mysql'
+require_relative 'database_config_item'
 
 module Database
-  @connection = nil
-  @config = nil
+  @config = ConfigItem.new
 
   def self.connection
-    @connection || begin
-      @config = ConfigStore.default
-      connect
+    begin
+      connect(ConfigStore.default)
     rescue DataObjects::SQLError => e
       raise ConnectionError.new(e)
     end
   end
 
   private
-  def self.connect
-    unless @config.empty?
+  def self.connect(config)
+    unless config.empty?
+      @config = config
       raise DriverNotSupported unless @config.driver == 'mysql' 
-      @connection = DataObjects::Connection.new(connection_string)
+      DataObjects::Connection.new(connection_string)
     end
   end
 
