@@ -17,7 +17,6 @@ class MandrillMergeApp
     $('#mandrill-connection-status').html response.message
     if response.can_connect
       window.MandrillMerge.app.toggle_section 'select_template'
-    return  
 
   select_template: (response)->
     $('#mandrill-template-status').html response.message
@@ -27,7 +26,6 @@ class MandrillMergeApp
     $('#db-connection-status').html response.message
     if response.can_connect
       window.MandrillMerge.app.toggle_section 'select_data'
-    null
 
   set_db_query_response: (response)->
     window.MandrillMerge.app.toggle_section 'sub_query'
