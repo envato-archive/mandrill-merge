@@ -28,6 +28,11 @@ class App < Sinatra::Application
     {:success => true, :message => session[:template]}.to_json
   end
 
+  post '/set-db-query' do
+    session[:db_query] = params[:db_query]
+    {:success => true, :message => session[:db_query]}.to_json
+  end
+
   get '/docs' do
     erb :index
   end

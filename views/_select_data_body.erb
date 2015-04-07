@@ -1,1 +1,4 @@
-<p>Under Construction</p>
+<form action="/set-db-query" method="post" ajax-form ajax-callback="set_db_query_response">
+  <textarea name="db_query" placeholder="Enter your query"></textarea>
+</form>
+<%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
