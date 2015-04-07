@@ -16,7 +16,7 @@ module Database
 
   private
   def self.connect
-    if @config
+    unless @config.empty?
       raise DriverNotSupported unless @config.driver == 'mysql' 
       @connection = DataObjects::Connection.new(connection_string)
     end

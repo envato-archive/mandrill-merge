@@ -1,7 +1,11 @@
 module Database
   ConfigItem = Struct.new(:name, :host, :username, :password, :port, :driver, :database) do
     def to_hash
-      Hash[*members.zip(values).flatten]
+      Hash[*members.map(&:to_s).zip(values).flatten]
+    end
+
+    def empty?
+      values.any?(&:nil?)
     end
 
     def initialize(settings={})
