@@ -17,6 +17,10 @@ class App < Sinatra::Application
   
   also_reload LIB_PATH_GLOB
 
+  use Rack::Session::Cookie, :key => 'rack.session',
+                           :path => '/',
+                           :secret => 'XF3jrOEWV3HjJ9ffcau3pdBWpgH='
+
 end
 
 require_relative 'assets'

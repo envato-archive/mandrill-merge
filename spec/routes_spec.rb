@@ -44,6 +44,20 @@ describe 'routes' do
     end
   end
 
+  describe '#set-db-query' do
+    it 'succeeds' do
+      post '/set-db-query', {:db_query => 'some query'}
+      json_hash = JSON.parse(last_response.body)
+      expect(json_hash['success']).to be true
+    end
+
+    it 'sets the db query in the response message' do
+      post '/set-db-query', {:db_query => 'some query'}
+      json_hash = JSON.parse(last_response.body)
+      expect(json_hash['message']).to include 'some query'
+    end
+  end
+  
   describe 'send-test' do
 
     let(:params) {}

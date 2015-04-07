@@ -1,5 +1,10 @@
 source "http://rubygems.org"
 
+# Dataobjects (from datamapper) driver. Add others for other RDBMS.
+# See http://github.com/datamapper/do
+gem 'do_mysql'
+
+
 gem 'mailchimp'
 gem 'dotenv'
 gem 'thin'
@@ -17,6 +22,8 @@ group :development, :test  do
   gem 'rspec'
   gem 'rack-test'
   gem 'sinatra-contrib'
+  gem 'pry'
   gem 'pry-byebug'
+  gem 'tux'
 end
 

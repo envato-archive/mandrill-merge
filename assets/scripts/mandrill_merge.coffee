@@ -17,11 +17,18 @@ class MandrillMergeApp
     $('#mandrill-connection-status').html response.message
     if response.can_connect
       window.MandrillMerge.app.toggle_section 'select_template'
-    return  
 
   select_template: (response)->
     $('#mandrill-template-status').html response.message
     window.MandrillMerge.app.toggle_section 'connect_db'
+
+  db_connect_response: (response)->
+    $('#db-connection-status').html response.message
+    if response.can_connect
+      window.MandrillMerge.app.toggle_section 'select_data'
+
+  set_db_query_response: (response)->
+    window.MandrillMerge.app.toggle_section 'sub_query'
 
   test_sent: (response)->
     $('#test-status').html response.message
@@ -31,5 +38,4 @@ class MandrillMergeApp
     $('#' + name + '_header').click();  
 
 $ ->
-  window.MandrillMerge.app = new MandrillMergeApp()
-  
+  window.MandrillMerge.app = new MandrillMergeApp() 

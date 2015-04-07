@@ -1,1 +1,15 @@
-<p>Under Construction</p>
+<form method="post" action="db/create" ajax-form ajax-callback="db_connect_response">
+  <input name="name" id="name" type="hidden" value="default" placeholder="Name"/>
+
+  <input name="host" id="host" type="text" placeholder="Host"/>
+
+  <input name="username" id="username" type="text" placeholder="Username"/>
+
+  <input name="password" id="password" type="password" placeholder="Password"/>
+
+  <input name="database" id="database" type="text" placeholder="Database"/>
+
+  <input name="port" id="port" type="text" placeholder="Port"/>
+</form>
+
+<%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
