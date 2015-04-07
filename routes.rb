@@ -1,5 +1,7 @@
 class App < Sinatra::Application
 
+  enable :sessions
+
   get '/' do
     redirect '/mail-merge'
   end
@@ -19,6 +21,11 @@ class App < Sinatra::Application
     end
 
     {:can_connect => mandrill.can_connect?, :message => message}.to_json
+  end
+
+  post '/select-template' do
+    session[:template] = params[:template]
+    {:success => true, :message => session[:template]}.to_json
   end
 
   get '/docs' do

@@ -10,4 +10,18 @@ describe 'routes' do
     end
   end
 
+  describe '#select-template' do
+    it 'succeeds' do
+      post '/select-template', {:template => 'anything'}
+      json_hash = JSON.parse(last_response.body)
+      expect(json_hash['success']).to be true
+    end
+
+    it 'sets the template name in the response message' do
+      post '/select-template', {:template => 'the_template'}
+      json_hash = JSON.parse(last_response.body)
+      expect(json_hash['message']).to include 'the_template'
+    end
+  end
+
 end
