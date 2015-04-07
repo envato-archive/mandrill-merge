@@ -17,8 +17,6 @@ class App < Sinatra::Application
   
   also_reload LIB_PATH_GLOB
 
-  enable :sessions
-
 end
 
 require_relative 'assets'
