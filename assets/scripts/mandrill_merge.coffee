@@ -11,7 +11,7 @@ class MandrillMergeApp
     caller.parent().prev('form').submit()
 
   go_back: (caller)->
-    alert 'watch this space'
+    caller.parents('.accordion-navigation').prev().find('a').click()
 
 $ ->
   window.MandrillMerge.app = new MandrillMergeApp()
