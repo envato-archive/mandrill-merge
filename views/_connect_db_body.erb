@@ -11,5 +11,5 @@
 
   <input name="port" id="port" type="text" placeholder="Port"/>
 
-  <input type="submit"/>
+  <%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
 </form>
