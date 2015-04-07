@@ -19,4 +19,3 @@ jQuery(function() {
     e.preventDefault();
   });
 });
-
