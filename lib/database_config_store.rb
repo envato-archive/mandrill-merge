@@ -15,7 +15,7 @@ module Database
 
     def save(config)
       options = { 'driver' => 'mysql', 'name' => 'default' }.merge(config)
-      store[ key(options['name']) ] = ConfigItem.new(options)
+      store[ key(options['name']) ] = ConfigItem.new(options).to_hash
     end
 
     def to_hash
