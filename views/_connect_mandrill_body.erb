@@ -1,6 +1,4 @@
 <form action="/verify-mandrill" method="post" ajax-form ajax-callback="mandrill_connect_response">
   <input type="text" name="key" placeholder="Your Mandrill API key">
-  <input type="submit">
 </form>
-<% navigation_locals = { back_href: "#", next_href: "#panel2a"} %>
-<%= partial(:navigation, :locals => navigation_locals) %>
+<%= partial(:navigation, :locals => { on_next: "submit_my_form"}) %>
