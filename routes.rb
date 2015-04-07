@@ -11,12 +11,12 @@ class App < Sinatra::Application
   end
 
   before do
-    Database::ConfigStore.new(session)
+    Database::ConfigStore.store = session
   end
 
   post '/db/create' do
     logger.info "DB connection with #{ params.dup.tap{|p| p['password'] = 'REDACTED'} }"
-    Database::ConfigStore.new(session).save(params)
+    Database::ConfigStore.save(params)
     redirect "/db/test"
   end
 
