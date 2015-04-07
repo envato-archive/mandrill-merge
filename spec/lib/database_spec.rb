@@ -1,21 +1,26 @@
 require 'spec_helper'
 
-class NullLogger
-  def info(*args)
-  end
-end
-
 describe 'Database' do
-  before { $logger = NullLogger.new }
-  let(:connection) { }
+  let(:connection) { double('DataObjects::Mysql::Connection') }
 
-  context 'can connect to Database' do
-    before { expect(DataObjects::Connection).to receive(:new).and_return(connection) }
+  let(:config_params) { {
+    'host' => '127.0.0.1',
+    'port' => 3306,
+    'username' => 'root',
+    'password' => 'sekrit',
+    'database' => 'testdb',
+    'driver' => 'mysql',
+  } }
+  let(:config_item) { Database::ConfigItem.new(config_params) }
 
-    it 'should work' do
-      expect(Database.connection).to_not be_nil
-    end
-
+  before do
+    expect(Database::ConfigStore).to receive(:default).and_return(config_item)
+    expect(DataObjects::Connection).to receive(:new).and_return(connection)
   end
+
+  it 'can connect to Database' do
+    Database.connection
+  end
+
 end
 

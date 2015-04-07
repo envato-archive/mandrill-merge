@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../app'
+require File.join(File.dirname(__FILE__), '..', 'app')
 require 'rspec'
 require 'rack/test'
 
