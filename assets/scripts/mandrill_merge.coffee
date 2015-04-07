@@ -13,12 +13,6 @@ class MandrillMergeApp
   go_back: (caller)->
     caller.parents('.accordion-navigation').prev().find('a').click()
 
-  db_connect_response: (response)->
-    $('#db-connection-status').html response.message
-    if response.can_connect
-      window.MandrillMerge.app.toggle_section 'select_data'
-    null
-
   mandrill_connect_response: (response)->
     $('#mandrill-connection-status').html response.message
     if response.can_connect
@@ -28,6 +22,12 @@ class MandrillMergeApp
   select_template: (response)->
     $('#mandrill-template-status').html response.message
     window.MandrillMerge.app.toggle_section 'connect_db'
+
+  db_connect_response: (response)->
+    $('#db-connection-status').html response.message
+    if response.can_connect
+      window.MandrillMerge.app.toggle_section 'select_data'
+    null
 
   set_db_query_response: (response)->
     window.MandrillMerge.app.toggle_section 'sub_query'
