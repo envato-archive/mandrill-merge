@@ -21,6 +21,7 @@ class MandrillMergeApp
 
   select_template: (response)->
     $('#mandrill-template-status').html response.message
+    window.MandrillMerge.app.toggle_section 'connect_db'
 
   toggle_section: (name)->
     $('#' + name + '_header').click();  
