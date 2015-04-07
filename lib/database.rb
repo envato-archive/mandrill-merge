@@ -10,7 +10,7 @@ module Database
       connect
     rescue DataObjects::SQLError
       #connection didn't work
-      raise ConnectionError
+      #raise ConnectionError
     end
   end
 
