@@ -32,7 +32,7 @@ describe Database::ConfigStore do
     describe '.default' do
       it 'gets default config' do
         expect(config_store.default).to_not be_nil
-        expect(config_store.default.name).to eq 'default'
+        expect(config_store.default[:name]).to eq 'default'
       end
     end
   end
