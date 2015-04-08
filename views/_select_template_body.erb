@@ -1,4 +1,4 @@
 <form action="/select-template" method="post" ajax-form ajax-callback="select_template">
-  <input type="text" name="template" placeholder="Mandrill template slug">
+  <input type="text" name="template" placeholder="Mandrill template slug" value="<%= @template %>">
 </form>
 <%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>

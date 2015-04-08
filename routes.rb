@@ -10,6 +10,12 @@ class App < Sinatra::Application
   end
 
   get '/mail-merge' do
+    @key           = session[:key]
+    @template      = session[:template]
+    @db_connection = Database::ConfigStore.default
+    @db_query      = session[:db_query]
+    # @subquery      = session[:subquery]
+
     erb :mail_merge
   end
 
