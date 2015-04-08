@@ -4,11 +4,14 @@ GEM
     addressable (2.3.8)
     backports (3.6.4)
     bond (0.5.1)
+    byebug (4.0.5)
+      columnize (= 0.9.0)
     coderay (1.1.0)
     coffee-script (2.3.0)
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
+    columnize (0.9.0)
     daemons (1.2.2)
     data_objects (0.10.15)
       addressable (~> 2.1)
@@ -21,6 +24,7 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    i18n (0.6.11)
     jsmin (1.0.1)
     json (1.8.2)
     mailchimp (0.0.9)
@@ -32,6 +36,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.1.0)
+      byebug (~> 4.0)
+      pry (~> 0.10)
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
@@ -93,13 +100,15 @@ DEPENDENCIES
   coffee-script
   do_mysql
   dotenv
+  i18n
   json
   mailchimp
   pry
+  pry-byebug
   rack-test
   rake
   redcarpet
-  rspec (= 2.99)
+  rspec
   sass
   sinatra
   sinatra-assetpack

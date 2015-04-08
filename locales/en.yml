@@ -1,0 +1,6 @@
+en:
+  mandrill_cannot_connect: 'Cannot connect to Mandrill. Please check your key or try again later.'
+  enter_key: 'Please enter your Mandrill key first'
+  select_template: 'Please select your Mandrill template first'
+  test_sent: 'Test email sent.'
+  enter_email: 'Please enter a valid email address'

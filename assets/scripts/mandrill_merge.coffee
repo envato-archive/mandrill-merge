@@ -30,9 +30,12 @@ class MandrillMergeApp
   set_db_query_response: (response)->
     window.MandrillMerge.app.toggle_section 'sub_query'
 
+  test_sent: (response)->
+    $('#test-status').html response.message
+    window.MandrillMerge.app.toggle_section 'go'
+
   toggle_section: (name)->
     $('#' + name + '_header').click();  
 
 $ ->
-  window.MandrillMerge.app = new MandrillMergeApp()
-  
+  window.MandrillMerge.app = new MandrillMergeApp() 

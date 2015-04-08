@@ -16,12 +16,14 @@ gem 'redcarpet'
 gem 'sinatra-assetpack', :require => 'sinatra/assetpack'
 gem 'sinatra-partial'
 gem 'sass'
+gem 'i18n'
 
 group :development, :test  do
-  gem 'pry'
-  gem 'rspec', '2.99'
+  gem 'rspec'
   gem 'rack-test'
   gem 'sinatra-contrib'
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'tux'
 end
 
