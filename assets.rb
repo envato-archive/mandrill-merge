@@ -3,6 +3,9 @@ class App < Sinatra::Application
   set :root, File.dirname(__FILE__)
   register Sinatra::AssetPack
 
+  set :sass, { :load_paths => [ "#{App.root}/assets/stylesheets" ] }
+  set :scss, sass
+
   assets {
     serve '/js', from: 'assets/scripts'
     serve '/css', from: 'assets/stylesheets'
