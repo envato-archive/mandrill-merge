@@ -46,8 +46,13 @@ class App < Sinatra::Application
   end
 
   post '/set-db-query' do
-    session[:db_query] = params[:db_query]
-    {:success => true, :message => session[:db_query]}.to_json
+    sql = session[:db_query] = params[:db_query]
+    begin
+      reader = Database.connection.create_command(sql).execute_reader
+      { success: true, message: "#{reader.count} records returned" }
+    rescue StandardError => e
+      { success: false, message: e.message }
+    end.to_json
   end
 
   post '/send-test' do
