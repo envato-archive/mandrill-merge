@@ -2,4 +2,9 @@
 <form action="/set-db-query" method="post" ajax-form ajax-callback="set_db_query_response">
   <textarea name="db_query" placeholder="Enter your query" rows="3"><%= @db_query %></textarea>
 </form>
+<a role="button" href="#" class="button right">Go</a>
+
+<div id="db-query-preview">
+</div>
+
 <%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
