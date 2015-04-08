@@ -1,15 +1,15 @@
 <form method="post" action="db/create" ajax-form ajax-callback="db_connect_response">
   <input name="name" id="name" type="hidden" value="default" placeholder="Name"/>
 
-  <input name="host" id="host" type="text" placeholder="Host" value="<%= @db_connection['host'] %>"/>
+  <input name="host" id="host" type="text" placeholder="Host" value="<%= @db_connection.host %>"/>
 
-  <input name="username" id="username" type="text" placeholder="Username" value="<%= @db_connection['username'] %>"/>
+  <input name="username" id="username" type="text" placeholder="Username" value="<%= @db_connection.username %>"/>
 
-  <input name="password" id="password" type="password" placeholder="Password" value="<%= @db_connection['password'] %>"/>
+  <input name="password" id="password" type="password" placeholder="Password" value="<%= @db_connection.password %>"/>
 
-  <input name="database" id="database" type="text" placeholder="Database" value="<%= @db_connection['database'] %>"/>
+  <input name="database" id="database" type="text" placeholder="Database" value="<%= @db_connection.database %>"/>
 
-  <input name="port" id="port" type="text" placeholder="Port" value="<%= @db_connection['port'] %>"/>
+  <input name="port" id="port" type="text" placeholder="Port" value="<%= @db_connection.port %>"/>
 </form>
 
 <%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
