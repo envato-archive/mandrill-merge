@@ -3,7 +3,7 @@
   <h2 class="tagline right">Making Mailouts <%= madjective %></h2>
 </div>
 <ul class="accordion" data-accordion>
-  <li class="accordion-navigation">
+  <li class="accordion-navigation active">
     <%= partial(:connect_mandrill_header, :locals => @mandrill_details) %>
     <div id="connect_mandrill" class="content active">
       <%= partial(:connect_mandrill_body) %>
