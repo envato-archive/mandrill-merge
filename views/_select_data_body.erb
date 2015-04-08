@@ -1,10 +1,19 @@
 <p>Your SQL should return the following columns: Unique ID, Recipient Email, <%= @merge_tags.join(', ') %></p>
-<form action="/set-db-query" method="post" ajax-form ajax-callback="set_db_query_response">
-  <textarea name="db_query" placeholder="Enter your query" rows="3"><%= @db_query %></textarea>
-</form>
-<a role="button" href="#" class="button right">Go</a>
 
-<div id="db-query-preview">
+<div class="row">
+  <div class="small-5 large-11 columns">
+    <form action="/set-db-query" method="post" ajax-form ajax-callback="set_db_query_response">
+      <textarea name="db_query" placeholder="Enter your query" rows="3"><%= @db_query %></textarea>
+    </form>
+  </div>
+  <div class="small-1 column">
+    <a role="button" href="#" aria-label="preview the query" class="button tiny">GO</a>
+  </div>
+</div>
+
+<div class="row">
+  <div id="db-query-preview" class="small-12 columns">
+  </div>
 </div>
 
 <%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
