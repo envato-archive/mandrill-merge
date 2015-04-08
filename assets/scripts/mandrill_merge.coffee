@@ -14,12 +14,9 @@ class MandrillMergeApp
         callback = $(this).attr('ajax-callback')
         $.post(action, params).done((response) ->
           window['MandrillMerge'].app[callback] jQuery.parseJSON(response)
-          return
         ).fail (response) ->
           alert 'something went wrong'
-          return
         e.preventDefault()
-        return
 
   initialize_foundation: ->
     $(document).foundation()
