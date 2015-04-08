@@ -1,4 +1,5 @@
 require 'mailchimp'
+require 'logger'
 
 class Mandrill
 
@@ -12,6 +13,10 @@ class Mandrill
     # By default mandrill sneak in some options, the empty hash overrides.
     key ||= Mandrill.api_key
     @mandrill ||= Mailchimp::Mandrill.new(key, options: {})
+    Dir.mkdir('logs') unless File.exist?('logs')
+
+    @logger = Logger.new('logs/common.log','weekly')
+    @logger.level = Logger::DEBUG  
   end
 
   def can_connect?
@@ -26,4 +31,15 @@ class Mandrill
     @user_details ||= @mandrill.users_info if can_connect?
   end
 
+  def send_single_email(template, send_to, data)
+    message_data = MessageBuilder.build_single(template, send_to, data)
+    @logger.info("Sending message: #{message_data.inspect}")
+    send_template(message_data).tap { |response| @logger.info("Response: #{response}") }
+  end
+
+  private
+
+  def send_template(message_data)
+    @mandrill.messages_send_template(message_data)
+  end
 end
