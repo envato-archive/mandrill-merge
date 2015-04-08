@@ -4,3 +4,4 @@ en:
   select_template: 'Please select your Mandrill template first'
   test_sent: 'Test email sent.'
   enter_email: 'Please enter a valid email address'
+  mandrill_cannot_send: 'Mandrill could not send the email.'
