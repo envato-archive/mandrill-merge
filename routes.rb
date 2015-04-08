@@ -52,6 +52,11 @@ class App < Sinatra::Application
     return {:success => false, :message => I18n.t(:enter_email)}.to_json unless valid_email?(params[:email])
     mandrill = Mandrill.new(session[:key])
     return {:can_connect => false, :message => I18n.t(:mandrill_cannot_connect), :goto_section => 'connect_mandrill'}.to_json unless mandrill.can_connect?
+    response = mandrill.send_single_email(session[:template], params[:email], [{name: 'FULLNAMEORUSERNAME', content: 'King Kong'}])
+    unless response[0]
+      message = response["message"] || I18n.t(:mandrill_cannot_send)
+      return {:can_connect => true, :success => false, :message => message}.to_json 
+    end
     {:can_connect => true, :success => true, :message => I18n.t(:test_sent)}.to_json
   end
 

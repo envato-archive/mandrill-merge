@@ -74,9 +74,28 @@ describe 'routes' do
         let(:params) { {:email => 'someone@somewhere.com'} } 
 
         context 'and mandrill can connect' do
-          it 'sends the email request' do
-            expect(json_hash['success']).to be true
-            expect(json_hash['message']).to include 'Test email sent.'
+          context 'and mandrill can send the email' do
+            let(:mandrill) { double(Mandrill, can_connect?: true, username: 'user', send_single_email: [{"email"=>params[:email], "status"=>"sent", "_id"=>"xyz", "reject_reason"=>nil}]) }
+
+            it 'provides a happy message' do
+              expect(json_hash['success']).to be true
+              expect(json_hash['message']).to include 'Test email sent.'
+            end
+          end
+
+          context 'but mandrill cannot send the email' do
+            let(:mandrill) { double(Mandrill, can_connect?: true, username: 'user', send_single_email: {"status"=>"error", "code"=>5, "name"=>"Unknown_Template", "message"=>"Some error from Mandrill"}) }
+            it 'provides the error message from Mandrill' do
+              expect(json_hash['success']).to be false
+              expect(json_hash['message']).to include 'Some error from Mandrill'
+            end
+          end
+         context "but mandrill cannot send the email and doesn't supply an error message" do
+            let(:mandrill) { double(Mandrill, can_connect?: true, username: 'user', send_single_email: {"status"=>"error"}) }
+            it 'provides our own error message' do
+              expect(json_hash['success']).to be false
+              expect(json_hash['message']).to include 'Mandrill could not send the email.'
+            end
           end
         end
 

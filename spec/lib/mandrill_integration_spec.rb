@@ -4,12 +4,19 @@ describe 'the real Mandrill' do
 
   context 'a valid API key is provided as an environment variable' do
 
+    subject(:mandrill) { Mandrill.new }
+
     it 'should connect using the API key from the environment by default' do
-      expect(Mandrill.new.can_connect?).to be true
+      expect(mandrill.can_connect?).to be true
     end
     
     it 'should retrieve the username' do
-      expect(Mandrill.new.username).to eq 'marketplacedev@envato.com'
+      expect(mandrill.username).to eq 'marketplacedev@envato.com'
+    end
+
+    it 'should send a single email' do
+      response = mandrill.send_single_email('bizzz-refund', 'mary-anne.cosgrove@envato.com', [{name: 'FULLNAMEORUSERNAME', content: 'Mary-Anne'}])
+      expect(response[0]['status']).to eq 'sent'
     end
 
   end
@@ -27,4 +34,3 @@ describe 'the real Mandrill' do
   end
 
 end
-
