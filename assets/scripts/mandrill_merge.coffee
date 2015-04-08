@@ -27,6 +27,9 @@ class MandrillMergeApp
   go_back: (caller)->
     caller.parents('.accordion-navigation').prev().find('a').click()
 
+  go_forward: (caller)->
+    caller.parents('.accordion-navigation').next().find('a').click()
+
   mandrill_connect_response: (response)->
     $('#mandrill-connection-status').html response.message
 
