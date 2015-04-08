@@ -45,6 +45,12 @@ describe 'routes' do
   end
 
   describe '#set-db-query' do
+    let(:reader) { double('reader').as_null_object }
+    before do
+      expect(reader).to receive(:count).and_return(55)
+      Database.stub_chain(:connection, :create_command, :execute_reader).and_return(reader)
+    end
+
     it 'succeeds' do
       post '/set-db-query', {:db_query => 'some query'}
       json_hash = JSON.parse(last_response.body)
@@ -54,7 +60,7 @@ describe 'routes' do
     it 'sets the db query in the response message' do
       post '/set-db-query', {:db_query => 'some query'}
       json_hash = JSON.parse(last_response.body)
-      expect(json_hash['message']).to include 'some query'
+      expect(json_hash['message']).to include '55 records returned'
     end
   end
   
