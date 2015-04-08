@@ -59,6 +59,11 @@ class MandrillMergeApp
     else
       MandrillMerge.app.mark_section_error('connect_db')
 
+  preview_db_query: (response)->
+    $('#data-query-status').html response.message
+    if response.success
+      $('#db-query-preview').html response.data
+
   set_db_query_response: (response)->
     $('#data-query-status').html response.message
 

@@ -64,7 +64,7 @@ class App < Sinatra::Application
     sql = session[:db_query] = params[:db_query]
     begin
       reader = Database.connection.create_command(sql).execute_reader
-      { success: true, message: "#{reader.count} records returned" }
+      { success: true, message: "#{reader.count} records returned", data: 'test' }
     rescue StandardError => e
       { success: false, message: e.message }
     end.to_json
