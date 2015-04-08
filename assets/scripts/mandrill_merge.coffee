@@ -1,11 +1,25 @@
 window.MandrillMerge or= {}
 
+$.ajaxSetup cache: false
+
 class MandrillMergeApp
   constructor: ->
+    @initialize_foundation()
     @bindEvents()
 
   bindEvents: ->
-    $('#hello-coffeescript').on('click', @greet)
+    $('form[ajax-form]').submit (e) ->
+        action = $(this).attr('action')
+        params = $(this).serialize()
+        callback = $(this).attr('ajax-callback')
+        $.post(action, params).done((response) ->
+          window['MandrillMerge'].app[callback] jQuery.parseJSON(response)
+        ).fail (response) ->
+          alert 'something went wrong'
+        e.preventDefault()
+
+  initialize_foundation: ->
+    $(document).foundation()
 
   submit_my_form: (caller)->
     caller.parent().prev('form').submit()
