@@ -41,9 +41,9 @@ class Mandrill
     @logger.debug("Getting template info: #{template}")
     response = @mandrill.templates_info({key: @key, name: template})
     @logger.debug("Response: #{response}")
-    return response if response["status"] == "error"
+    raise MandrillError.new(response["message"]) if response["status"] == "error"
     published_template_code = response["publish_code"]
-    return nil if published_template_code == nil || published_template_code.empty?
+    raise UnpublishedTemplate.new("#{template} #{I18n.t :unpublished_template}") if published_template_code == nil || published_template_code.empty?
     published_template_code.scan(/\*\|(.*?)\|\*/).flatten
   end  
 
@@ -52,4 +52,11 @@ class Mandrill
   def send_template(message_data)
     @mandrill.messages_send_template(message_data)
   end
+
+  class MandrillError < StandardError
+  end
+
+  class UnpublishedTemplate < StandardError
+  end
+
 end

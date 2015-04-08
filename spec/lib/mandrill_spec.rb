@@ -39,8 +39,8 @@ describe 'our Mandrill' do
       context 'when the template is not published' do
         let(:templates_info_response) { {"slug"=>"template", "name"=>"The Template", "code"=>"something else"} }
         
-        it 'returns nil' do
-          expect(mandrill.fetch_merge_tags('xxx')).to be_nil
+        it 'raises an error' do
+          expect { mandrill.fetch_merge_tags('xxx') }.to raise_error(Mandrill::UnpublishedTemplate)
         end
       end 
 
@@ -48,8 +48,8 @@ describe 'our Mandrill' do
       context 'when an invalid template is provided' do
         let(:templates_info_response) { {"status"=>"error", "code"=>5, "name"=>"Unknown_Template", "message"=>'No such template "xxx"'} }
         
-        it 'returns the whole error response' do
-          expect(mandrill.fetch_merge_tags('xxx')).to eq({"status"=>"error", "code"=>5, "name"=>"Unknown_Template", "message"=>'No such template "xxx"'})
+        it 'raises an error' do
+          expect { mandrill.fetch_merge_tags('xxx') }.to raise_error(Mandrill::MandrillError)
         end
       end 
     end 
