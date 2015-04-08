@@ -1,7 +1,7 @@
 <p>Your SQL should return the following columns: Unique ID, Recipient Email, <%= @merge_tags.join(', ') %></p>
 
 <div class="row">
-  <form action="/set-db-query" method="post" ajax-form ajax-callback="preview_db_query">
+  <form action="<%=url('/set-db-query') %>" method="post" ajax-form ajax-callback="preview_db_query">
     <div class="small-5 large-11 columns">
       <textarea name="db_query" placeholder="Enter your query" rows="3"><%= @db_query %></textarea>
     </div>
