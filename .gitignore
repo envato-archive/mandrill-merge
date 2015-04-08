@@ -3,3 +3,4 @@
 .sass-cache/
 .env
 public/
+logs/
