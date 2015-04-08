@@ -11,8 +11,8 @@ class Mandrill
 
   def initialize(key=nil)
     # By default mandrill sneak in some options, the empty hash overrides.
-    key ||= Mandrill.api_key
-    @mandrill ||= Mailchimp::Mandrill.new(key, options: {})
+    @key = key || Mandrill.api_key
+    @mandrill ||= Mailchimp::Mandrill.new(@key, options: {})
     Dir.mkdir('logs') unless File.exist?('logs')
 
     @logger = Logger.new('logs/common.log','weekly')
@@ -33,9 +33,19 @@ class Mandrill
 
   def send_single_email(template, send_to, data)
     message_data = MessageBuilder.build_single(template, send_to, data)
-    @logger.info("Sending message: #{message_data.inspect}")
-    send_template(message_data).tap { |response| @logger.info("Response: #{response}") }
+    @logger.debug("Sending message: #{message_data.inspect}")
+    send_template(message_data).tap { |response| @logger.debug("Response: #{response}") }
   end
+
+  def fetch_merge_tags(template)
+    @logger.debug("Getting template info: #{template}")
+    response = @mandrill.templates_info({key: @key, name: template})
+    @logger.debug("Response: #{response}")
+    return response if response["status"] == "error"
+    published_template_code = response["publish_code"]
+    return nil if published_template_code == nil || published_template_code.empty?
+    published_template_code.scan(/\*\|(.*?)\|\*/).flatten
+  end  
 
   private
 

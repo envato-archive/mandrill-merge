@@ -19,6 +19,11 @@ describe 'the real Mandrill' do
       expect(response[0]['status']).to eq 'sent'
     end
 
+    it 'should fetch the merge tags within the template' do
+      response = mandrill.fetch_merge_tags('bizzz-refund')
+      expect(response).to eq (['FULLNAMEORUSERNAME'])
+    end
+
   end
 
   context 'an invalid API key is provided' do
