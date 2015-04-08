@@ -12,8 +12,9 @@
 </div>
 
 <div class="row">
-  <div id="db-query-preview" class="small-12 columns">
+  <div id="db-query-preview" class="small-12 columns" style="min-height:2em;">
+    <i>preview results go here</i>
   </div>
 </div>
 
-<%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
+<%= partial(:navigation, :locals => { on_back: "go_back", on_next: "go_forward"}) %>
