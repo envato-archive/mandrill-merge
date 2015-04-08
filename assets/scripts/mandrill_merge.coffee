@@ -40,8 +40,11 @@ class MandrillMergeApp
   select_template: (response)->
     $('#mandrill-template-status').html response.message
     MandrillMerge.app.clear_section_status('select_template')
-    MandrillMerge.app.mark_section_complete('select_template')
-    MandrillMerge.app.toggle_section 'connect_db'
+    if response.success
+      MandrillMerge.app.mark_section_complete('select_template')
+      MandrillMerge.app.toggle_section 'connect_db'
+    else
+      MandrillMerge.app.mark_section_error('select_template')
 
   db_connect_response: (response)->
     $('#db-connection-status').html response.message
