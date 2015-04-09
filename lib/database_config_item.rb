@@ -4,6 +4,10 @@ module Database
       Hash[*members.map(&:to_s).zip(values).flatten]
     end
 
+    def connection_string
+      "#{driver}://#{username}:#{password}@#{host}:#{port}/#{database}"
+    end
+
     def empty?
       values.all?(&:nil?)
     end

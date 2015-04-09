@@ -17,12 +17,8 @@ module Database
     unless config.empty?
       @config = config
       raise DriverNotSupported unless @config.driver == 'mysql' 
-      DataObjects::Connection.new(connection_string)
+      DataObjects::Connection.new(@config.connection_string)
     end
-  end
-
-  def self.connection_string
-    "#{@config.driver}://#{@config.username}:#{@config.password}@#{@config.host}:#{@config.port}/#{@config.database}"
   end
 
   class DriverNotSupported < StandardError; end
