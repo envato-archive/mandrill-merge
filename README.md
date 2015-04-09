@@ -1,5 +1,5 @@
 Mandrill Merge - Making Mailouts Manageable
-============================
+=============================
 
 
 Install
