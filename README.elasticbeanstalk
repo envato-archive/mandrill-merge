@@ -1,0 +1,38 @@
+Prerequisites
+------------
+ - Ensure you have the aws tools installed and configured
+ - aws configure --profile 
+    - setup a profile for use (enter your keys and optionally chose a region)
+
+ - make sure you append --profile <profilename> to your eb commands below
+ - if you default the region in your profile you can 
+    leave the --region out in the eb commands below
+
+Beanstalk setup
+---------------
+
+1. Install the awsebcli tools  (you want something in the 3.x release, not the 2.x release)
+   - sudo pip install awsebcli  (someone should boxenate this)
+(use virtualenv to contain the pip stuff if you are so inclined)
+
+2.  eb init --profile <fromabove> --region <fromabove>
+  - create new application give it a name <appname>
+  - it will say it appears you are using ruby - say Y
+  - choose the correct version of the container - Ruby 2.1 (Puma)
+  - Say Y to do you wish to setup SSH to your instances
+  - choose an existing keypair or create a new one  
+     (if you create a new one don't forget to store it in your 
+      password vault for safe keeping)
+
+3.  eb create --profile <fromabove> --region <fromabove>
+  - when prompted for Environment Name take the default 
+  - accept the default CNAME prefix
+
+4.  vist http://<appname>.elasticbeanstalk.com/ and profit.
+
+To deploy
+--------
+
+make sure you changes are comment 
+
+eb deploy --profile <fromabove> --region <fromabove>
