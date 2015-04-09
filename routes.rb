@@ -21,6 +21,7 @@ class App < Sinatra::Application
   end
 
   post '/verify-mandrill' do
+    content_type :json
     session[:key] = params[:key]
     mandrill = Mandrill.new(session[:key])
 
@@ -34,6 +35,7 @@ class App < Sinatra::Application
   end
 
   post '/select-template' do
+    content_type :json
     return {can_connect: false, message: I18n.t(:enter_key), goto_section: 'connect_mandrill'}.to_json unless session[:key]
     mandrill = Mandrill.new(session[:key])
     begin
@@ -79,6 +81,7 @@ class App < Sinatra::Application
   end
 
   post '/send-test' do
+    content_type :json
     return {:can_connect => false, :message => I18n.t(:enter_key), :goto_section => 'connect_mandrill'}.to_json unless session[:key]
     return {:can_connect => false, :message => I18n.t(:select_template), :goto_section => 'select_template'}.to_json unless session[:template]
     return {:success => false, :message => I18n.t(:enter_email)}.to_json unless valid_email?(params[:email])
