@@ -66,10 +66,12 @@ class App < Sinatra::Application
     session[:db_query] = params[:db_query]
     begin
       command = Database.connection.create_command(params[:db_query])
+      data_rows = []
+      command.execute_reader.take(20).each{|row| data_rows << row.values }
       {
         success: true,
         message: "#{command.execute_reader.count} records returned",
-        data: command.execute_reader.take(20).to_a
+        data: { fields: command.execute_reader.fields, rows: data_rows }
       }
     rescue StandardError => e
       { success: false, message: e.message }
