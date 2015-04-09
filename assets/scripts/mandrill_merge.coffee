@@ -35,6 +35,11 @@ class MandrillMergeApp
   go_forward: (caller)->
     caller.parents('.accordion-navigation').next().find('a').click()
 
+  // This is a hack to get a tab to go directly to the send_test tab when it is not the next in line
+  // Its hack week after all... until we come up with a better way to handle the UI workflow
+  send_test: (caller)->
+    MandrillMerge.app.toggle_section('send_test')
+
   mandrill_connect_response: (response)->
     $('#mandrill-connection-status').html response.message
 
