@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+<script id="preview-template" type="text/x-handlebars-template">
+  <table class="entry">
+    <thead>
+      <tr>
+      {{#each fields}}
+        <th>{{this}}</th>
+      {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+    {{#each rows}}
+      <tr>
+      {{#each this}}
+        <td>{{this}}</td>
+      {{/each}}
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</script>
 <html>
   <head>
     <title>Mandrill Merge: Making Mailouts Marvellous</title>

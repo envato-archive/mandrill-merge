@@ -14,13 +14,14 @@ class App < Sinatra::Application
     @template      = session[:template]
     @db_connection = Database::ConfigStore.default
     @db_query      = session[:db_query]
-    @merge_tags    = session[:merge_tags]
+    @merge_tags    = session[:merge_tags] || []
     # @subquery      = session[:subquery]
 
     erb :mail_merge
   end
 
   post '/verify-mandrill' do
+    content_type :json
     session[:key] = params[:key]
     mandrill = Mandrill.new(session[:key])
 
@@ -34,6 +35,7 @@ class App < Sinatra::Application
   end
 
   post '/select-template' do
+    content_type :json
     return {can_connect: false, message: I18n.t(:enter_key), goto_section: 'connect_mandrill'}.to_json unless session[:key]
     mandrill = Mandrill.new(session[:key])
     begin
@@ -53,6 +55,7 @@ class App < Sinatra::Application
   end
 
   get '/db/test' do
+    content_type :json
     begin
       { can_connect: true, message: "Connection info: #{Database.connection}" }
     rescue StandardError => e
@@ -61,16 +64,24 @@ class App < Sinatra::Application
   end
 
   post '/set-db-query' do
-    sql = session[:db_query] = params[:db_query]
+    content_type :json
+    session[:db_query] = params[:db_query]
     begin
-      reader = Database.connection.create_command(sql).execute_reader
-      { success: true, message: "#{reader.count} records returned" }
+      command = Database.connection.create_command(params[:db_query])
+      data_rows = []
+      command.execute_reader.take(20).each{|row| data_rows << row.values }
+      {
+        success: true,
+        message: "#{command.execute_reader.count} records returned",
+        data: { fields: command.execute_reader.fields, rows: data_rows }
+      }
     rescue StandardError => e
       { success: false, message: e.message }
     end.to_json
   end
 
   post '/send-test' do
+    content_type :json
     return {:can_connect => false, :message => I18n.t(:enter_key), :goto_section => 'connect_mandrill'}.to_json unless session[:key]
     return {:can_connect => false, :message => I18n.t(:select_template), :goto_section => 'select_template'}.to_json unless session[:template]
     return {:success => false, :message => I18n.t(:enter_email)}.to_json unless valid_email?(params[:email])

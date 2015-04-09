@@ -5,6 +5,7 @@ $.ajaxSetup cache: false
 class MandrillMergeApp
   constructor: ->
     @initialize_foundation()
+    @initialize_preview()
     @bindEvents()
 
   bindEvents: ->
@@ -13,7 +14,7 @@ class MandrillMergeApp
       params = $(this).serialize()
       callback = $(this).attr('ajax-callback')
       $.post(action, params).done((response) ->
-        window['MandrillMerge'].app[callback] jQuery.parseJSON(response)
+        window['MandrillMerge'].app[callback] response
       ).fail (response) ->
         alert 'something went wrong'
       e.preventDefault()
@@ -21,11 +22,18 @@ class MandrillMergeApp
   initialize_foundation: ->
     $(document).foundation()
 
+  initialize_preview: ->
+    source = $('#preview-template').html()
+    @previewTemplate = Handlebars.compile(source)
+
   submit_my_form: (caller)->
     caller.parent().prev('form').submit()
 
   go_back: (caller)->
     caller.parents('.accordion-navigation').prev().find('a').click()
+
+  go_forward: (caller)->
+    caller.parents('.accordion-navigation').next().find('a').click()
 
   mandrill_connect_response: (response)->
     $('#mandrill-connection-status').html response.message
@@ -55,6 +63,14 @@ class MandrillMergeApp
       MandrillMerge.app.toggle_section 'select_data'
     else
       MandrillMerge.app.mark_section_error('connect_db')
+
+  preview_db_query: (response)->
+    $('#data-query-status').html response.message
+    if response.success
+      preview_data = @previewTemplate(response.data)
+    else
+      preview_data = 'no data to preview'
+    $('#db-query-preview').html preview_data
 
   set_db_query_response: (response)->
     $('#data-query-status').html response.message
