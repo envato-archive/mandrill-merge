@@ -14,7 +14,7 @@ class MandrillMergeApp
       params = $(this).serialize()
       callback = $(this).attr('ajax-callback')
       $.post(action, params).done((response) ->
-        window['MandrillMerge'].app[callback] jQuery.parseJSON(response)
+        window['MandrillMerge'].app[callback] response
       ).fail (response) ->
         alert 'something went wrong'
       e.preventDefault()
