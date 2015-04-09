@@ -33,8 +33,16 @@ class App < Sinatra::Application
   end
 
   post '/select-template' do
-    session[:template] = params[:template]
-    {:success => true, :message => session[:template]}.to_json
+    return {can_connect: false, message: I18n.t(:enter_key), goto_section: 'connect_mandrill'}.to_json unless session[:key]
+    mandrill = Mandrill.new(session[:key])
+    begin
+      response = mandrill.fetch_merge_tags(params[:template])
+      session[:template] = params[:template]
+      session[:merge_tags] = response unless response.empty?
+      {success: true, message: session[:template]}
+    rescue StandardError => e
+      {success: false, message: e.message}    
+    end.to_json
   end
 
   post '/db/create' do

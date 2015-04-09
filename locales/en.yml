@@ -5,3 +5,4 @@ en:
   test_sent: 'Test email sent.'
   enter_email: 'Please enter a valid email address'
   mandrill_cannot_send: 'Mandrill could not send the email.'
+  unpublished_template: 'seems to be unpublished. Please select a published template.'

@@ -6,12 +6,13 @@ describe 'routes' do
 
   before { allow(Mandrill).to receive(:new).and_return(mandrill) }
   
+  subject(:json_hash) { JSON.parse(last_response.body) }
+
   describe '#verify-mandrill' do
 
     context "Can connect to Mandrill as 'user'" do
       it 'returns json with expected keys' do
         post '/verify-mandrill', {:key => 'test'}
-        json_hash = JSON.parse(last_response.body)
         expect(json_hash['can_connect']).to be true
         expect(json_hash['message']).to include 'user'
       end
@@ -23,7 +24,6 @@ describe 'routes' do
       
       it 'returns an error message' do
         post '/verify-mandrill', {:key => 'test'}
-        json_hash = JSON.parse(last_response.body)
         expect(json_hash['can_connect']).to be false
         expect(json_hash['message']).to include 'Cannot connect to Mandrill'
       end
@@ -31,17 +31,71 @@ describe 'routes' do
   end
 
   describe '#select-template' do
-    it 'succeeds' do
-      post '/select-template', {:template => 'anything'}
-      json_hash = JSON.parse(last_response.body)
-      expect(json_hash['success']).to be true
-    end
 
-    it 'sets the template name in the response message' do
-      post '/select-template', {:template => 'the_template'}
-      json_hash = JSON.parse(last_response.body)
-      expect(json_hash['message']).to include 'the_template'
+    context 'a valid published template' do
+      before { post '/select-template', {:template => 'the_template'}, 'rack.session' => {key: 'key'} }
+
+      context 'with merge tags' do
+        let(:mandrill) { double(Mandrill, fetch_merge_tags: ['TAG1', 'TAG2']) }
+
+        it 'succeeds' do
+          expect(json_hash['success']).to be true
+        end
+
+        it 'sets the template name in the response message' do
+          expect(json_hash['message']).to include 'the_template'
+        end
+
+        it 'saves the merge tags in the session' do
+          # how to test??
+        end
+      end
+
+      context 'without merge tags' do
+        let(:mandrill) { double(Mandrill, fetch_merge_tags: []) }
+
+        it 'succeeds' do
+          expect(json_hash['success']).to be true
+        end
+
+        it 'sets the template name in the response message' do
+          expect(json_hash['message']).to include 'the_template'
+        end
+      end
     end
+      
+    context 'a valid unpublished template' do
+      let(:mandrill) { double(Mandrill, fetch_merge_tags: []) }
+      before do
+        allow(mandrill).to receive(:fetch_merge_tags).and_raise(Mandrill::UnpublishedTemplate, I18n.t(:unpublished_template))
+        post '/select-template', {:template => 'the_template'}, 'rack.session' => {key: 'key'}
+      end
+
+      it 'fails' do
+        expect(json_hash['success']).to be false
+      end
+
+      it 'informs the user the template has not been published' do
+        expect(json_hash['message']).to include 'seems to be unpublished'
+      end
+    end
+    
+    context 'an invalid template' do
+      let(:mandrill) { double(Mandrill, fetch_merge_tags: []) }
+      before do
+        allow(mandrill).to receive(:fetch_merge_tags).and_raise(Mandrill::MandrillError, 'No such template "the_template"')
+        post '/select-template', {:template => 'the_template'}, 'rack.session' => {key: 'key'}
+      end
+
+      it 'fails' do
+        expect(json_hash['success']).to be false
+      end
+
+      it 'returns the error message from Mandrill' do
+        expect(json_hash['message']).to include 'No such template "the_template"'
+      end
+    end
+    
   end
 
   describe '#set-db-query' do
@@ -49,17 +103,14 @@ describe 'routes' do
     before do
       expect(reader).to receive(:count).and_return(55)
       Database.stub_chain(:connection, :create_command, :execute_reader).and_return(reader)
+      post '/set-db-query', {:db_query => 'some query'}
     end
 
     it 'succeeds' do
-      post '/set-db-query', {:db_query => 'some query'}
-      json_hash = JSON.parse(last_response.body)
       expect(json_hash['success']).to be true
     end
 
     it 'sets the db query in the response message' do
-      post '/set-db-query', {:db_query => 'some query'}
-      json_hash = JSON.parse(last_response.body)
       expect(json_hash['message']).to include '55 records returned'
     end
   end
@@ -70,8 +121,6 @@ describe 'routes' do
     let(:session) {}
 
     before { post '/send-test', params, 'rack.session' => session }
-
-    subject(:json_hash) { JSON.parse(last_response.body) }
 
     context 'when session contains the mandrill key and template name' do
       let(:session) { {key: 'key', template: 'template'} }
