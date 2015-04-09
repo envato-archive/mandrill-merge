@@ -40,7 +40,16 @@ class App < Sinatra::Application
       response = mandrill.fetch_merge_tags(params[:template])
       session[:template] = params[:template]
       session[:merge_tags] = response unless response.empty?
-      {success: true, message: session[:template]}
+
+      if session[:merge_tags]
+        merge_tags_list = "Unique ID, Recipient Email, "
+        session[:merge_tags].each do |tag|
+          merge_tags_list << "#{tag}, "
+        end
+        merge_tags_list = merge_tags_list[0..-3]
+      end
+
+      {success: true, message: session[:template], merge_tags: merge_tags_list||''}
     rescue StandardError => e
       {success: false, message: e.message}    
     end.to_json

@@ -41,6 +41,7 @@ class MandrillMergeApp
     $('#mandrill-template-status').html response.message
     MandrillMerge.app.clear_section_status('select_template')
     if response.success
+      $('#merge-tags-list').html(response.merge_tags)
       MandrillMerge.app.mark_section_complete('select_template')
       MandrillMerge.app.toggle_section 'connect_db'
     else
