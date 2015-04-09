@@ -63,10 +63,14 @@ class App < Sinatra::Application
 
   post '/set-db-query' do
     content_type :json
-    sql = session[:db_query] = params[:db_query]
+    session[:db_query] = params[:db_query]
     begin
-      reader = Database.connection.create_command(sql).execute_reader
-      { success: true, message: "#{reader.count} records returned", data: reader.take(20).to_a }
+      command = Database.connection.create_command(params[:db_query])
+      {
+        success: true,
+        message: "#{command.execute_reader.count} records returned",
+        data: command.execute_reader.take(20).to_a
+      }
     rescue StandardError => e
       { success: false, message: e.message }
     end.to_json
