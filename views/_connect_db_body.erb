@@ -10,6 +10,8 @@
   <input name="database" id="database" type="text" placeholder="Database" value="<%= @db_connection.database %>"/>
 
   <input name="port" id="port" type="text" placeholder="Port" value="<%= @db_connection.port %>"/>
+
+  <input name="ca_cert" id="ca_cert" type="text" placeholder="(for SSL) path to CA cert PEM file" value="<%= @db_connection.ca_cert %>"/>
 </form>
 
 <%= partial(:navigation, :locals => { on_back: "go_back", on_next: "submit_my_form"}) %>
