@@ -63,7 +63,7 @@ class MandrillMergeApp
     MandrillMerge.app.clear_section_status('select_data')
     if response.success
       MandrillMerge.app.mark_section_complete('select_data')
-      MandrillMerge.app.toggle_section 'sub_query'
+      MandrillMerge.app.toggle_section 'send_test'
     else
       MandrillMerge.app.mark_section_error('select_data')
 
