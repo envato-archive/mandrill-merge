@@ -14,6 +14,7 @@ class App < Sinatra::Application
     @template      = session[:template]
     @db_connection = Database::ConfigStore.default
     @db_query      = session[:db_query]
+    @merge_tags    = session[:merge_tags]
     # @subquery      = session[:subquery]
 
     erb :mail_merge
