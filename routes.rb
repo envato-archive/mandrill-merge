@@ -15,7 +15,6 @@ class App < Sinatra::Application
     @db_connection = Database::ConfigStore.default
     @db_query      = session[:db_query]
     @merge_tags    = session[:merge_tags] || []
-    # @subquery      = session[:subquery]
 
     erb :mail_merge
   end
@@ -42,7 +41,16 @@ class App < Sinatra::Application
       response = mandrill.fetch_merge_tags(params[:template])
       session[:template] = params[:template]
       session[:merge_tags] = response unless response.empty?
-      {success: true, message: session[:template]}
+
+      if session[:merge_tags]
+        merge_tags_list = "<i>Unique ID, Recipient Email, "
+        session[:merge_tags].each do |tag|
+          merge_tags_list << "#{tag}, "
+        end
+        merge_tags_list = merge_tags_list[0..-3] + "</i>"
+      end
+
+      {success: true, message: session[:template], merge_tags: merge_tags_list||''}
     rescue StandardError => e
       {success: false, message: e.message}    
     end.to_json
@@ -87,7 +95,16 @@ class App < Sinatra::Application
     return {:success => false, :message => I18n.t(:enter_email)}.to_json unless valid_email?(params[:email])
     mandrill = Mandrill.new(session[:key])
     return {:can_connect => false, :message => I18n.t(:mandrill_cannot_connect), :goto_section => 'connect_mandrill'}.to_json unless mandrill.can_connect?
-    response = mandrill.send_single_email(session[:template], params[:email], [{name: 'FULLNAMEORUSERNAME', content: 'King Kong'}])
+
+    begin
+      command = Database.connection.create_command(session[:db_query])
+      data_row = command.execute_reader.take(1).first.values
+      merged_template_data = TemplateFieldMerger.merge_fields(session[:merge_tags], [data_row])
+    rescue StandardError => e
+      return {:can_connect => true, :success => false, :message => e.message}.to_json
+    end
+
+    response = mandrill.send_single_email(session[:template], params[:email], merged_template_data.first)
     unless response[0]
       message = response["message"] || I18n.t(:mandrill_cannot_send)
       return {:can_connect => true, :success => false, :message => message}.to_json 

@@ -36,7 +36,8 @@ describe 'routes' do
       before { post '/select-template', {:template => 'the_template'}, 'rack.session' => {key: 'key'} }
 
       context 'with merge tags' do
-        let(:mandrill) { double(Mandrill, fetch_merge_tags: ['TAG1', 'TAG2']) }
+        let(:merge_tags) { ['TAG1', 'TAG2'] }
+        let(:mandrill) { double(Mandrill, fetch_merge_tags: merge_tags) }
 
         it 'succeeds' do
           expect(json_hash['success']).to be true
@@ -47,7 +48,7 @@ describe 'routes' do
         end
 
         it 'saves the merge tags in the session' do
-          # how to test??
+          expect(json_hash['merge_tags']).to include merge_tags.join(', ')
         end
       end
 
@@ -119,8 +120,14 @@ describe 'routes' do
 
     let(:params) {}
     let(:session) {}
+    let(:reader) { double('reader').as_null_object }
 
-    before { post '/send-test', params, 'rack.session' => session }
+    before do
+      Database.stub_chain(:connection, :create_command, :execute_reader).and_return(reader)
+      allow(TemplateFieldMerger).to receive(:merge_fields).and_return([])
+
+      post '/send-test', params, 'rack.session' => session
+    end
 
     context 'when session contains the mandrill key and template name' do
       let(:session) { {key: 'key', template: 'template'} }

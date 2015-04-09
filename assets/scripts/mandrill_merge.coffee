@@ -35,6 +35,11 @@ class MandrillMergeApp
   go_forward: (caller)->
     caller.parents('.accordion-navigation').next().find('a').click()
 
+  // This is a hack to get a tab to go directly to the send_test tab when it is not the next in line
+  // Its hack week after all... until we come up with a better way to handle the UI workflow
+  send_test: (caller)->
+    MandrillMerge.app.toggle_section('send_test')
+
   mandrill_connect_response: (response)->
     $('#mandrill-connection-status').html response.message
 
@@ -49,6 +54,7 @@ class MandrillMergeApp
     $('#mandrill-template-status').html response.message
     MandrillMerge.app.clear_section_status('select_template')
     if response.success
+      $('#merge-tags-list').html(response.merge_tags)
       MandrillMerge.app.mark_section_complete('select_template')
       MandrillMerge.app.toggle_section 'connect_db'
     else
@@ -78,7 +84,7 @@ class MandrillMergeApp
     MandrillMerge.app.clear_section_status('select_data')
     if response.success
       MandrillMerge.app.mark_section_complete('select_data')
-      MandrillMerge.app.toggle_section 'sub_query'
+      MandrillMerge.app.toggle_section 'send_test'
     else
       MandrillMerge.app.mark_section_error('select_data')
 

@@ -1,5 +1,7 @@
-<p>Your SQL should return the following columns: Unique ID, Recipient Email, <%= @merge_tags.join(', ') %></p>
-
+Your SQL should return the following columns:
+<div id="merge-tags-list">
+  Unique ID, Recipient Email, <%= @merge_tags.join(', ') %>
+</div>
 <div class="row">
   <form action="<%=url('/set-db-query') %>" method="post" ajax-form ajax-callback="preview_db_query">
     <div class="small-5 large-11 columns">
@@ -17,4 +19,4 @@
   </div>
 </div>
 
-<%= partial(:navigation, :locals => { on_back: "go_back", on_next: "go_forward"}) %>
+<%= partial(:navigation, :locals => { on_back: "go_back", on_next: "send_test"}) %>
