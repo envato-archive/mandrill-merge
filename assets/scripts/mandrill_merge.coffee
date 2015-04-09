@@ -5,6 +5,7 @@ $.ajaxSetup cache: false
 class MandrillMergeApp
   constructor: ->
     @initialize_foundation()
+    @initialize_preview()
     @bindEvents()
 
   bindEvents: ->
@@ -20,6 +21,10 @@ class MandrillMergeApp
 
   initialize_foundation: ->
     $(document).foundation()
+
+  initialize_preview: ->
+    source = $('#preview-template').html()
+    @previewTemplate = Handlebars.compile(source)
 
   submit_my_form: (caller)->
     caller.parent().prev('form').submit()
@@ -62,7 +67,7 @@ class MandrillMergeApp
   preview_db_query: (response)->
     $('#data-query-status').html response.message
     if response.success
-      preview_data = response.data
+      preview_data = @previewTemplate(response.data)
     else
       preview_data = 'no data to preview'
     $('#db-query-preview').html preview_data
