@@ -53,6 +53,7 @@ class App < Sinatra::Application
   end
 
   get '/db/test' do
+    content_type :json
     begin
       { can_connect: true, message: "Connection info: #{Database.connection}" }
     rescue StandardError => e
@@ -61,10 +62,11 @@ class App < Sinatra::Application
   end
 
   post '/set-db-query' do
+    content_type :json
     sql = session[:db_query] = params[:db_query]
     begin
       reader = Database.connection.create_command(sql).execute_reader
-      { success: true, message: "#{reader.count} records returned", data: 'test' }
+      { success: true, message: "#{reader.count} records returned", data: reader.take(20).to_a }
     rescue StandardError => e
       { success: false, message: e.message }
     end.to_json
