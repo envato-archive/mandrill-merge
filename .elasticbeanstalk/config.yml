@@ -1,0 +1,12 @@
+branch-defaults:
+  beanstalk:
+    environment: mandrill-merge-dev
+  master:
+    environment: mandrill-merge-dev
+global:
+  application_name: mandrill-merge
+  default_ec2_keyname: envato-market-prod
+  default_platform: Ruby 2.1 (Puma)
+  default_region: null
+  profile: prodtest
+  sc: git
