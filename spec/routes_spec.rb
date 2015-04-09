@@ -120,8 +120,14 @@ describe 'routes' do
 
     let(:params) {}
     let(:session) {}
+    let(:reader) { double('reader').as_null_object }
 
-    before { post '/send-test', params, 'rack.session' => session }
+    before do
+      Database.stub_chain(:connection, :create_command, :execute_reader).and_return(reader)
+      allow(TemplateFieldMerger).to receive(:merge_fields).and_return([])
+
+      post '/send-test', params, 'rack.session' => session
+    end
 
     context 'when session contains the mandrill key and template name' do
       let(:session) { {key: 'key', template: 'template'} }
