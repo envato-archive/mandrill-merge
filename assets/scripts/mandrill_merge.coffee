@@ -62,7 +62,10 @@ class MandrillMergeApp
   preview_db_query: (response)->
     $('#data-query-status').html response.message
     if response.success
-      $('#db-query-preview').html response.data
+      preview_data = response.data
+    else
+      preview_data = 'no data to preview'
+    $('#db-query-preview').html preview_data
 
   set_db_query_response: (response)->
     $('#data-query-status').html response.message
