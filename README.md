@@ -1,7 +1,7 @@
 Mandrill Merge - Making Mailouts Magnificent!
 ============================
 
-We all hate spam, but sometimes we need to get an important message out to a large group of users. [Mandrill](https://mandrillapp.com) is great at allowing you to define templates, sending emails out, and keeping track of sends and responses. But how do we get the data from our database over to Mandrill quickly and easily? That's where MandrillMerge comes in...
+We all hate spam, but sometimes you need to get an important message out to a large group of people. [Mandrill](https://mandrillapp.com) is great at allowing you to define templates, sending emails out, and keeping track of sends and responses. But how do you get the data from your database over to Mandrill quickly and easily? That's where MandrillMerge comes in...
 
 Current Features
 --------
