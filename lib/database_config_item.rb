@@ -1,5 +1,5 @@
 module Database
-  ConfigItem = Struct.new(:name, :host, :username, :password, :port, :driver, :database) do
+  ConfigItem = Struct.new(:name, :host, :username, :password, :port, :driver, :database, :ca_cert) do
     def to_hash
       Hash[*members.map(&:to_s).zip(values).flatten]
     end
@@ -19,6 +19,7 @@ module Database
       self.name     = settings['name']
       self.host     = settings['host']
       self.port     = settings['port']
+      self.ca_cert  = settings['ca_cert']
       self.database = settings['database']
       self.password = settings['password']
       self.username = settings['username']
