@@ -2,38 +2,46 @@ require 'spec_helper'
 
 describe 'the real Mandrill' do
 
-  context 'a valid API key is provided as an environment variable' do
+  context 'when a valid API key is provided as an environment variable' do
 
     subject(:mandrill) { Mandrill.new }
 
-    it 'should connect using the API key from the environment by default' do
+    it 'connects using the API key from the environment by default' do
       expect(mandrill.can_connect?).to be true
     end
     
-    it 'should retrieve the username' do
+    it 'retrieves the username' do
       expect(mandrill.username).to eq 'marketplacedev@envato.com'
     end
 
-    it 'should send a single email' do
+    it 'sends a single email' do
       response = mandrill.send_single_email('bizzz-refund', 'mary-anne.cosgrove@envato.com', [{name: 'FULLNAMEORUSERNAME', content: 'Mary-Anne'}])
       expect(response[0]['status']).to eq 'sent'
     end
 
-    it 'should fetch the merge tags within the template' do
+    it 'sends a batch of emails' do
+      response = mandrill.send_email_batch('bizzz-refund', 
+        ['mary-anne.cosgrove@envato.com', 'steven.douglas@envato.com'], 
+        [[{name: 'FULLNAMEORUSERNAME', content: 'Mary-Anne'}], [{name: 'FULLNAMEORUSERNAME', content: 'Steven D'}]])
+      expect(response[0]['status']).to eq 'sent'
+      expect(response[1]['status']).to eq 'sent'
+    end  
+
+    it 'fetches the merge tags within the template' do
       response = mandrill.fetch_merge_tags('bizzz-refund')
       expect(response).to eq (['FULLNAMEORUSERNAME'])
     end
 
   end
 
-  context 'an invalid API key is provided' do
+  context 'when an invalid API key is provided' do
     let(:sad_mandrill) { Mandrill.new('invalid key') }
 
-    it 'should return false' do
+    it 'returns false' do
       expect(sad_mandrill.can_connect?).to be false
     end
 
-    it 'should have nil username' do
+    it 'has nil username' do
       expect(sad_mandrill.username).to be nil
     end
   end

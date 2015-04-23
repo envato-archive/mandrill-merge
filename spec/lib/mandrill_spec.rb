@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'our Mandrill' do
 
   let(:templates_info_response) { {} }
-  let(:happy_chimp) { double(:valid_api_key? => true, :users_info => {'username' => 'Bubbles'}, :templates_info => templates_info_response) } 
+  let(:messages_send_template_response) { {} }
+  let(:happy_chimp) { double(:valid_api_key? => true, :users_info => {'username' => 'Bubbles'}, :templates_info => templates_info_response, :messages_send_template =>  messages_send_template_response) } 
   let(:sad_chimp) { double(:valid_api_key? => false) } 
 
   subject(:mandrill) { Mandrill.new }
@@ -52,9 +53,22 @@ describe 'our Mandrill' do
           expect { mandrill.fetch_merge_tags('xxx') }.to raise_error(Mandrill::MandrillError)
         end
       end 
-    end 
+    end
 
-  end
+    describe '#send_email_batch' do
+      context "when there's an email address for every set of placeholder values" do
+        it 'sends to mandrill' do
+          response = mandrill.send_email_batch('template', ['fred@example.com', 'hansolo@example.com'], 
+            [
+              [{ name: 'FIRSTNAME', content: 'FRED' }, { name: 'SURNAME', content: 'BASSETT' }],
+              [{ name: 'FIRSTNAME', content: 'HANS' }, { name: 'SURNAME', content: 'OLO' }]
+            ])
+          expect(happy_chimp).to have_received(:messages_send_template)
+        end
+      end
+    end
+
+   end
 
   context 'cannot connect to Mandrill' do
     before { expect(Mailchimp::Mandrill).to receive(:new).and_return(sad_chimp) }

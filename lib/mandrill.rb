@@ -31,11 +31,17 @@ class Mandrill
     @user_details ||= @mandrill.users_info if can_connect?
   end
 
-  def send_single_email(template, send_to, data)
-    message_data = MessageBuilder.build_single(template, send_to, data)
+  def send_single_email(template, send_to, merged_template_data_row)
+    message_data = MessageBuilder.build_single(template, send_to, merged_template_data_row)
     @logger.debug("Sending message: #{message_data.inspect}")
     send_template(message_data).tap { |response| @logger.debug("Response: #{response}") }
   end
+
+  def send_email_batch(template, emails, merged_template_data)
+    message_data = MessageBuilder.build_batch(template, emails, merged_template_data)
+    @logger.debug("Sending message: #{message_data.inspect}")
+    send_template(message_data).tap { |response| @logger.debug("Response: #{response}") }
+  end  
 
   def fetch_merge_tags(template)
     @logger.debug("Getting template info: #{template}")
