@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
 # Dataobjects (from datamapper) driver. Add others for other RDBMS.
 # See http://github.com/datamapper/do
